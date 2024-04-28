@@ -16,8 +16,8 @@ package object Matrices {
       * @return matriz cuadrada
       */
     def matrizAlAzar (long:Int, vals:Int): Matriz ={
-        val v = Vector.fill(long,long){random.nextInt(vals)}
-        v
+      val v = Vector.fill(long,long){random.nextInt(vals)}
+      v
     }
 
     /**
@@ -26,8 +26,8 @@ package object Matrices {
       * @return matriz transpuesta
       */
     def transpuesta(m:Matriz): Matriz ={
-        val l = m.length
-        Vector.tabulate(1,1)((i,j) => m(j)(i))
+      val l = m.length
+      Vector.tabulate(1,1)((i,j) => m(j)(i))
     }
 
     /**
@@ -37,7 +37,7 @@ package object Matrices {
       * @return producto punto entre v1 y v2
       */
     def prodPunto(v1:Vector[Int], v2:Vector[Int]): Int ={
-        (v1 zip v2).map({case (i,j)=> (i*j)}).sum
+      (v1 zip v2).map({case (i,j)=> (i*j)}).sum
     }
 
     /**
@@ -48,7 +48,7 @@ package object Matrices {
       * @return
       */
     def prodPuntoParD(v1:ParVector[Int], v2:ParVector[Int]): Int ={
-        (v1 zip v2).map({case (i,j)=> (i*j)}).sum
+      (v1 zip v2).map({case (i,j)=> (i*j)}).sum
     }
 
     /**
@@ -59,7 +59,7 @@ package object Matrices {
       * @return
       */
     def multMatriz(m1:Matriz, m2:Matriz): Matriz ={
-        Vector(Vector(0))
+      Vector(Vector(0))
     }
 
     /**
@@ -70,7 +70,7 @@ package object Matrices {
       * @return
       */
     def multMatrizPar(m1:Matriz, m2:Matriz): Matriz ={
-        Vector(Vector(0))
+      Vector(Vector(0))
     }
 
     /**
@@ -84,7 +84,7 @@ package object Matrices {
       * @return Submatriz
       */
     def subMatriz(m:Matriz, i:Int, j:Int, l:Int): Matriz ={
-        Vector(Vector(0))
+      Vector(Vector(0))
     }
 
     /**
@@ -96,7 +96,7 @@ package object Matrices {
       * @return Suma de m1 y m2
       */
     def sumMatriz(m1:Matriz, m2:Matriz): Matriz ={
-        Vector(Vector(0))
+      Vector(Vector(0))
     }
 
     /**
@@ -108,7 +108,7 @@ package object Matrices {
       * @return Multiplicación de m1 y m2
       */
     def multMatrizRec(m1:Matriz, m2:Matriz): Matriz ={
-        Vector(Vector(0))
+      Vector(Vector(0))
     }
 
     /**
@@ -120,7 +120,7 @@ package object Matrices {
       * @return Multiplicación de m1 y m2
       */
     def multMatrizRecPar(m1:Matriz, m2:Matriz): Matriz ={
-        Vector(Vector(0))
+      Vector(Vector(0))
     }
 
     /**
@@ -132,7 +132,7 @@ package object Matrices {
       * @return Resta de m1 y m2
       */
     def restaMatriz(m1:Matriz, m2:Matriz): Matriz ={
-        Vector(Vector(0))
+      Vector(Vector(0))
     }
 
     /**
@@ -144,7 +144,7 @@ package object Matrices {
       * @return Multiplicación de m1 y m2
       */
     def multStrassen(m1:Matriz, m2:Matriz): Matriz ={
-        Vector(Vector(0))
+      Vector(Vector(0))
     }
 
     /**
@@ -157,7 +157,7 @@ package object Matrices {
       * @return Multiplicación de m1 y m2
       */
     def multStrassenPar(m1:Matriz, m2:Matriz): Matriz ={
-        Vector(Vector(0))
+      Vector(Vector(0))
     }  
 }
 
