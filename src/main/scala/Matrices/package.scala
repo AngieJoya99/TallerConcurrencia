@@ -27,7 +27,7 @@ package object Matrices {
       */
     def transpuesta(m:Matriz): Matriz ={
       val l = m.length
-      Vector.tabulate(1,1)((i,j) => m(j)(i))
+      Vector.tabulate(l,l)((i,j) => m(j)(i))
     }
 
     /**
@@ -59,7 +59,9 @@ package object Matrices {
       * @return
       */
     def multMatriz(m1:Matriz, m2:Matriz): Matriz ={
-      Vector(Vector(0))
+      val m1Transpuesta = transpuesta(m1)
+      val m = m1Transpuesta.map{ i => m2.map{ j => prodPunto(i,j)}}
+      transpuesta(m)
     }
 
     /**
@@ -84,7 +86,16 @@ package object Matrices {
       * @return Submatriz
       */
     def subMatriz(m:Matriz, i:Int, j:Int, l:Int): Matriz ={
-      Vector(Vector(0))
+      i match {
+        case 0 => j match {
+          case 0 => Vector.tabulate(l,l)((i,j) => m(i)(j))
+          case l => Vector.tabulate(l,l)((i,j) => m(l+i)(j))
+          }
+        case l => j match {
+          case 0 => Vector.tabulate(l,l)((i,j) => m(i)(l+j))
+          case l => Vector.tabulate(l,l)((i,j) => m(l+i)(l+j))
+        }
+      }
     }
 
     /**
@@ -96,7 +107,8 @@ package object Matrices {
       * @return Suma de m1 y m2
       */
     def sumMatriz(m1:Matriz, m2:Matriz): Matriz ={
-      Vector(Vector(0))
+      val l = m1.length
+      Vector.tabulate(l,l)((i,j) => m1(i)(j)+m2(i)(j))
     }
 
     /**
@@ -132,7 +144,8 @@ package object Matrices {
       * @return Resta de m1 y m2
       */
     def restaMatriz(m1:Matriz, m2:Matriz): Matriz ={
-      Vector(Vector(0))
+      val l = m1.length
+      Vector.tabulate(l,l)((i,j) => m1(i)(j) - m2(i)(j))
     }
 
     /**
