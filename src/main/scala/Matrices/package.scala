@@ -10,13 +10,25 @@ package object Matrices {
 
     /**
       * Crea una matriz cuadrada de dimensiones long x long
-      * con valores aleatorios entre 0 y vals
+      * con valores enteros aleatorios entre 0 y vals
       * @param long dimensiones de la matriz
-      * @param vals valor máximo del aleatorio
+      * @param vals valor máximo (abierto) del aleatorio
       * @return matriz cuadrada
       */
     def matrizAlAzar (long:Int, vals:Int): Matriz ={
       val v = Vector.fill(long,long){random.nextInt(vals)}
+      v
+    }
+
+    /**
+      * Crea un vector de tamaño longs y valores enteros aleatorios
+      * entre 0 y vals
+      * @param long longitud del vector
+      * @param vals valor máximo (abierto) del aleatorio
+      * @return vector de enteros
+      */
+    def vectorAlAzar (long:Int, vals:Int): Vector[Int] ={
+      val v = Vector.fill(long){random.nextInt(vals)}
       v
     }
 
@@ -33,7 +45,7 @@ package object Matrices {
     /**
       * Calcula el producto punto entre dos vectores v1 y v2
       * @param v1 vector 1
-      * @param v2 vector 1
+      * @param v2 vector 2
       * @return producto punto entre v1 y v2
       */
     def prodPunto(v1:Vector[Int], v2:Vector[Int]): Int ={
@@ -43,7 +55,7 @@ package object Matrices {
     /**
       * 
       *
-      * @param v1
+      * @param v1 
       * @param v2
       * @return
       */
@@ -52,8 +64,8 @@ package object Matrices {
     }
 
     /**
-      * Ejercicio 1.1.1
-      *
+      * Dadas dos matrices cuadradas del mismo tamaño (potencia de 2) m1 y m2,
+      * calcula la multiplicación de las dos matrices 
       * @param m1 Matriz 1
       * @param m2 Matriz 2
       * @return
@@ -61,12 +73,24 @@ package object Matrices {
     def multMatriz(m1:Matriz, m2:Matriz): Matriz ={
       val m1Transpuesta = transpuesta(m1)
       val m = m1Transpuesta.map{ i => m2.map{ j => prodPunto(i,j)}}
+      transpuesta(m) 
+    }
+    
+    def multMatriz2(m1:Matriz, m2:Matriz): Matriz ={
+      val m2Transpuesta = transpuesta(m2)
+      val m = m2Transpuesta.map{ i => m1.map{ j => prodPunto(i,j)}}
+      transpuesta(m)
+    }
+
+    def multMatriz3(m1:Matriz, m2:Matriz): Matriz ={
+      val m2Transpuesta = transpuesta(m2)
+      val m = Vector.tabulate(m1.size,m1.size)((i,j) => prodPunto(m2Transpuesta(i), m1(j)))
       transpuesta(m)
     }
 
     /**
-      * Ejercicio 1.1.2
-      *
+      * Dadas dos matrices cuadradas del mismo tamaño (potencia de 2) m1 y m2,
+      * calcula la multiplicación de las dos matrices en paralelo
       * @param m1 Matriz 1
       * @param m2 Matriz 2
       * @return
@@ -114,7 +138,7 @@ package object Matrices {
     /**
       * Ejercicio 1.2.3
       * Dadas dos matrices cuadradas del mismo tamaño (potencia de 2) m1 y m2,
-      * calcula la multiplicación de las dos matrices
+      * calcula la multiplicación de las dos matrices usando recursión
       * @param m1 Matriz 1
       * @param m2 Matriz 2
       * @return Multiplicación de m1 y m2
@@ -126,7 +150,7 @@ package object Matrices {
     /**
       * Ejercicio 1.2.4
       * Dadas dos matrices cuadradas del mismo tamaño (potencia de 2) m1 y m2,
-      * calcula la multiplicación de las dos matrices en paralelo
+      * calcula la multiplicación de las dos matrices en paralelo usando recursión
       * @param m1 Matriz 1
       * @param m2 Matriz 2
       * @return Multiplicación de m1 y m2
