@@ -53,7 +53,7 @@ package object Matrices {
     }
 
     /**
-      * 
+      * Usada en 1.5
       *
       * @param v1 
       * @param v2
@@ -71,18 +71,12 @@ package object Matrices {
       * @return
       */
     def multMatriz(m1:Matriz, m2:Matriz): Matriz ={
-      val m1Transpuesta = transpuesta(m1)
-      val m = m1Transpuesta.map{ i => m2.map{ j => prodPunto(i,j)}}
-      transpuesta(m) 
-    }
-    
-    def multMatriz2(m1:Matriz, m2:Matriz): Matriz ={
       val m2Transpuesta = transpuesta(m2)
       val m = m2Transpuesta.map{ i => m1.map{ j => prodPunto(i,j)}}
       transpuesta(m)
     }
 
-    def multMatriz3(m1:Matriz, m2:Matriz): Matriz ={
+    def multMatriz2(m1:Matriz, m2:Matriz): Matriz ={
       val m2Transpuesta = transpuesta(m2)
       val m = Vector.tabulate(m1.size,m1.size)((i,j) => prodPunto(m2Transpuesta(i), m1(j)))
       transpuesta(m)
@@ -96,7 +90,9 @@ package object Matrices {
       * @return
       */
     def multMatrizPar(m1:Matriz, m2:Matriz): Matriz ={
-      Vector(Vector(0))
+      val m2Transpuesta = transpuesta(m2)
+      val (p1,p2) = parallel(multMatriz(m1,m2),multMatriz(m1,m2))
+      p1++p2
     }
 
     /**
