@@ -71,8 +71,8 @@ package object Matrices {
       * @return
       */
     def multMatriz(m1:Matriz, m2:Matriz): Matriz ={
-      val m2Transpuesta = transpuesta(m2)
-      val m = m2Transpuesta.map{ i => m1.map{ j => prodPunto(i,j)}}
+      val m1Transpuesta = transpuesta(m1)
+      val m = m1Transpuesta.map{ i => m2.map{ j => prodPunto(i,j)}}
       transpuesta(m)
     }
 
