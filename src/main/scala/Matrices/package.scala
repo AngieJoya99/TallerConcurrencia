@@ -71,15 +71,8 @@ package object Matrices {
       * @return
       */
     def multMatriz(m1:Matriz, m2:Matriz): Matriz ={
-      val m1Transpuesta = transpuesta(m1)
-      val m = m1Transpuesta.map{ i => m2.map{ j => prodPunto(i,j)}}
-      transpuesta(m)
-    }
-
-    def multMatriz2(m1:Matriz, m2:Matriz): Matriz ={
       val m2Transpuesta = transpuesta(m2)
-      val m = Vector.tabulate(m1.size,m1.size)((i,j) => prodPunto(m2Transpuesta(i), m1(j)))
-      transpuesta(m)
+      Vector.tabulate(m1.size,m1.size)((i,j) => prodPunto(m1(i), m2Transpuesta(j)))
     }
 
     /**
@@ -109,10 +102,10 @@ package object Matrices {
       i match {
         case 0 => j match {
           case 0 => Vector.tabulate(l,l)((i,j) => m(i)(j))
-          case l => Vector.tabulate(l,l)((i,j) => m(l+i)(j))
+          case l => Vector.tabulate(l,l)((i,j) => m(i)(l+j))
           }
         case l => j match {
-          case 0 => Vector.tabulate(l,l)((i,j) => m(i)(l+j))
+          case 0 => Vector.tabulate(l,l)((i,j) => m(i+l)(j))
           case l => Vector.tabulate(l,l)((i,j) => m(l+i)(l+j))
         }
       }
