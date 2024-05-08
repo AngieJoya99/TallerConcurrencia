@@ -53,11 +53,10 @@ package object Matrices {
     }
 
     /**
-      * Usada en 1.5
-      *
-      * @param v1 
-      * @param v2
-      * @return
+      * Calcula de manera paralela el producto punto entre dos vectores v1 y v2
+      * @param v1 Vector paralelo 1
+      * @param v2 Vector paralelo 2
+      * @return producto punto entre v1 y v2
       */
     def prodPuntoParD(v1:ParVector[Int], v2:ParVector[Int]): Int ={
       (v1 zip v2).map({case (i,j)=> (i*j)}).sum
@@ -84,18 +83,16 @@ package object Matrices {
       */
     def multMatrizPar(m1:Matriz, m2:Matriz): Matriz ={
       val m2Transpuesta = transpuesta(m2)
-      val (p1,p2) = parallel(multMatriz(m1,m2),multMatriz(m1,m2))
-      p1++p2
+      Vector.tabulate(m1.size,m1.size)((i,j) => prodPunto(m1(i), m2Transpuesta(j)))
     }
 
     /**
-      * Ejercicio 1.2.1
       * Dada una matriz cuadrada m de tamaño NxN, 1<=i, j<=N, i+n<=N, j+n<=N,
       * Retorna la submatriz de NxN correspondiente a m[i..i+(n-1) , j..j+(n-1)]
       * @param m Matriz
-      * @param i
-      * @param j
-      * @param l
+      * @param i tamaño de x
+      * @param j tamaño de y
+      * @param l longitud de la matriz
       * @return Submatriz
       */
     def subMatriz(m:Matriz, i:Int, j:Int, l:Int): Matriz ={
@@ -112,7 +109,6 @@ package object Matrices {
     }
 
     /**
-      * Ejercicio 1.2.2
       * Dadas dos matrices cuadradas del mismo tamaño (potencia de 2) m1 y m2,
       * calcula la suma de las dos matrices
       * @param m1 Matriz 1
@@ -125,7 +121,6 @@ package object Matrices {
     }
 
     /**
-      * Ejercicio 1.2.3
       * Dadas dos matrices cuadradas del mismo tamaño (potencia de 2) m1 y m2,
       * calcula la multiplicación de las dos matrices usando recursión
       * @param m1 Matriz 1
@@ -137,7 +132,6 @@ package object Matrices {
     }
 
     /**
-      * Ejercicio 1.2.4
       * Dadas dos matrices cuadradas del mismo tamaño (potencia de 2) m1 y m2,
       * calcula la multiplicación de las dos matrices en paralelo usando recursión
       * @param m1 Matriz 1
@@ -149,7 +143,6 @@ package object Matrices {
     }
 
     /**
-      * Ejercicio 1.3.1
       * Dadas dos matrices cuadradas del mismo tamaño (potencia de 2) m1 y m2,
       * calcula la resta de las dos matrices
       * @param m1 Matriz 1
@@ -162,7 +155,6 @@ package object Matrices {
     }
 
     /**
-      * Ejercicio 1.3.2
       * Dadas dos matrices cuadradas del mismo tamaño (potencia de 2) m1 y m2,
       * calcula la multiplicación de las dos matrices usando el algortimo de Strassen
       * @param m1 Matriz 1
@@ -174,7 +166,6 @@ package object Matrices {
     }
 
     /**
-      * Ejercicio 1.3.3
       * Dadas dos matrices cuadradas del mismo tamaño (potencia de 2) m1 y m2,
       * calcula la multiplicación en paralelo de las dos matrices usando el 
       * algortimo de Strassen
