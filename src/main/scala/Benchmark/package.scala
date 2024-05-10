@@ -24,7 +24,7 @@ package object Benchmark {
   }
 
 
-  def compararMultMatriz(n:Int) = {
+  /*def compararMultMatriz(n:Int) = {
     // Para probar con paralelismo de datos
     val m1= matrizAlAzar(n,2)
     val m2= matrizAlAzar(n,2)
@@ -43,7 +43,7 @@ package object Benchmark {
     ) withWarmer(new Warmer.Default) measure {multMatrizParD(m1parD,m2parD)}
     val speedUp= timeA1.value/timeA2.value
     (timeA1.value, timeA2.value, speedUp)
-  }
+  }*/
 
   def compararProdPunto(n:Int) = {
     // Para probar con paralelismo de datos

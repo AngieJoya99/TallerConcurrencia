@@ -79,11 +79,15 @@ package object Matrices {
       * calcula la multiplicación de las dos matrices en paralelo
       * @param m1 Matriz 1
       * @param m2 Matriz 2
-      * @return
+      * @return Matriz resultante de m1 x m2
       */
     def multMatrizPar(m1:Matriz, m2:Matriz): Matriz ={
-      val m2Transpuesta = transpuesta(m2)
-      Vector.tabulate(m1.size,m1.size)((i,j) => prodPunto(m1(i), m2Transpuesta(j)))
+      if (m1.length<=1)(multMatriz(m1,m2))
+      else{
+        val m2Transpuesta = transpuesta(m2)
+        val mPar = Vector.tabulate(m1.size,m1.size)((i,j) => task(prodPunto(m1(i), m2Transpuesta(j))))
+        mPar.map(x => x.map(y => y.join()))
+      }      
     }
 
     /**
@@ -128,7 +132,18 @@ package object Matrices {
       * @return Multiplicación de m1 y m2
       */
     def multMatrizRec(m1:Matriz, m2:Matriz): Matriz ={
-      Vector(Vector(0))
+      val mitad = m1.length/2
+      val subM1 = Vector(subMatriz(m1,0,0,mitad),subMatriz(m1,mitad,0,mitad),subMatriz(m1,mitad,0,mitad),subMatriz(m1,mitad,mitad,mitad))
+      val subM2 = Vector(subMatriz(m2,0,0,mitad),subMatriz(m2,mitad,0,mitad),subMatriz(m2,mitad,0,mitad),subMatriz(m2,mitad,mitad,mitad))
+      val subMultIzq = Vector(multMatrizRec(subM1(0),subM2(0)),multMatrizRec(subM1(0),subM2(1)),multMatrizRec(subM1(2),subM2(0)),multMatrizRec(subM1(2),subM2(1)))
+      val subMultDer = Vector(multMatrizRec(subM1(1),subM2(2)),multMatrizRec(subM1(1),subM2(3)),multMatrizRec(subM1(3),subM2(2)),multMatrizRec(subM1(3),subM2(3)))
+      val mult = Vector(sumMatriz(subMultIzq(0),subMultDer(0)),sumMatriz(subMultIzq(1),subMultDer(1)),sumMatriz(subMultIzq(2),subMultDer(2)),sumMatriz(subMultIzq(3),subMultDer(3)))
+      
+      Vector.tabulate(m1.length,m1.length)((i,j) => 
+        if (i < mitad && j < mitad) (mult(0)(i)(j))
+        else if (i < mitad && j >= mitad) (mult(1)(i)(j-mitad))
+        else if(i >= mitad && j < mitad) (mult(2)(i-mitad)(j))
+        else (mult(3)(i-mitad)(j-mitad)))
     }
 
     /**
@@ -165,6 +180,7 @@ package object Matrices {
       Vector(Vector(0))
     }
 
+    
     /**
       * Dadas dos matrices cuadradas del mismo tamaño (potencia de 2) m1 y m2,
       * calcula la multiplicación en paralelo de las dos matrices usando el 
@@ -175,6 +191,27 @@ package object Matrices {
       */
     def multStrassenPar(m1:Matriz, m2:Matriz): Matriz ={
       Vector(Vector(0))
-    }  
+    }    
 }
+
+object Main {
+  def main(args: Array[String]): Unit = {
+    import Matrices._
+    import Benchmark._
+
+    //val m1 = matrizAlAzar(math.pow(2,2).toInt,2)
+    //val m2 = matrizAlAzar(math.pow(2,2).toInt,2)
+    
+    val m1 = Vector(Vector(1, 1, 0, 1), Vector(0, 1, 0, 1), Vector(1, 1, 0, 0), Vector(0, 0, 1, 1))
+    val m2 = Vector(Vector(0, 1, 0, 0), Vector(0, 1, 0, 1), Vector(0, 0, 1, 0), Vector(1, 0, 0, 0))
+
+    //Método Estándar
+    println(multMatriz(m1,m2))
+    println(multMatrizPar(m1,m2))
+
+    //Método Recursivo
+    println(multMatrizRec(m1,m2))
+  }
+}
+
 
