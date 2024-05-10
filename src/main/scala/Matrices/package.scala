@@ -200,9 +200,9 @@ package object Matrices {
         val mitad = m1.length/2
         val subM1 = Vector(subMatriz(m1,0,0,mitad),subMatriz(m1,mitad,0,mitad),subMatriz(m1,mitad,0,mitad),subMatriz(m1,mitad,mitad,mitad))
         val subM2 = Vector(subMatriz(m2,0,0,mitad),subMatriz(m2,mitad,0,mitad),subMatriz(m2,mitad,0,mitad),subMatriz(m2,mitad,mitad,mitad))
-        val mS1 = Vector(restaMatriz(m2(1),m2(3)),sumMatriz(m1(0),m1(1)),sumMatriz(m1(2),m1(3)),restaMatriz(m2(2),m2(0)),sumMatriz(m1(0),m1(3)))
-        val mS2 = Vector(sumMatriz(m2(0),m2(3)),restaMatriz(m1(1),m1(3)),sumMatriz(m2(2),m2(3)),restaMatriz(m1(0),m1(2)),sumMatriz(m2(0),m2(1)))
-        val mP = Vector(multStrassen(m1(0),mS1(0)),multStrassen(mS1(0),m2(3)),multStrassen(mS1(2),m2(0)),multStrassen(m1(3),mS1(3)),multStrassen(mS1(4),mS2(0)),multStrassen(mS2(1),mS2(2)),multStrassen(mS2(3),mS2(4)))
+        val mS1 = Vector(restaMatriz(subM2(1),subM2(3)),sumMatriz(subM1(0),subM1(1)),sumMatriz(subM1(2),subM1(3)),restaMatriz(subM2(2),subM2(0)),sumMatriz(subM1(0),subM1(3)))
+        val mS2 = Vector(sumMatriz(subM2(0),subM2(3)),restaMatriz(subM1(1),subM1(3)),sumMatriz(subM2(2),subM2(3)),restaMatriz(subM1(0),subM1(2)),sumMatriz(subM2(0),subM2(1)))
+        val mP = Vector(multStrassen(subM1(0),mS1(0)),multStrassen(mS1(0),subM2(3)),multStrassen(mS1(2),subM2(0)),multStrassen(subM1(3),mS1(3)),multStrassen(mS1(4),mS2(0)),multStrassen(mS2(1),mS2(2)),multStrassen(mS2(3),mS2(4)))
         val mult = Vector(sumMatriz(mP(4),restaMatriz(mP(3),sumMatriz(mP(1),mP(5)))),sumMatriz(mP(0),mP(1)),sumMatriz(mP(2),mP(3)),sumMatriz(mP(4),restaMatriz(mP(0),sumMatriz(mP(2),mP(6)))))
         
         Vector.tabulate(m1.length,m1.length)((i,j) => 
@@ -223,14 +223,14 @@ package object Matrices {
       * @return Multiplicación de m1 y m2
       */
     def multStrassenPar(m1:Matriz, m2:Matriz): Matriz ={
-      if (m1.length ==1) (multStrassen(m1,m2))
+      if (m1.length <=1) (multStrassen(m1,m2))
       else{
         val mitad = m1.length/2
         val subM1 = Vector(parallel(subMatriz(m1,0,0,mitad),subMatriz(m1,mitad,0,mitad),subMatriz(m1,mitad,0,mitad),subMatriz(m1,mitad,mitad,mitad)))
         val subM2 = Vector(parallel(subMatriz(m2,0,0,mitad),subMatriz(m2,mitad,0,mitad),subMatriz(m2,mitad,0,mitad),subMatriz(m2,mitad,mitad,mitad)))
-        val mS1 = Vector(restaMatriz(m2(1),m2(3)),sumMatriz(m1(0),m1(1)),sumMatriz(m1(2),m1(3)),restaMatriz(m2(2),m2(0)),sumMatriz(m1(0),m1(3)))
-        val mS2 = Vector(sumMatriz(m2(0),m2(3)),restaMatriz(m1(1),m1(3)),sumMatriz(m2(2),m2(3)),restaMatriz(m1(0),m1(2)),sumMatriz(m2(0),m2(1)))
-        val mP = Vector(multStrassen(m1(0),mS1(0)),multStrassen(mS1(0),m2(3)),multStrassen(mS1(2),m2(0)),multStrassen(m1(3),mS1(3)),multStrassen(mS1(4),mS2(0)),multStrassen(mS2(1),mS2(2)),multStrassen(mS2(3),mS2(4)))
+        val mS1 = Vector(restaMatriz(subM2(1),subM2(3)),sumMatriz(subM1(0),subM1(1)),sumMatriz(subM1(2),subM1(3)),restaMatriz(subM2(2),subM2(0)),sumMatriz(subM1(0),subM1(3)))
+        val mS2 = Vector(sumMatriz(subM2(0),subM2(3)),restaMatriz(subM1(1),subM1(3)),sumMatriz(subM2(2),subM2(3)),restaMatriz(subM1(0),subM1(2)),sumMatriz(subM2(0),subM2(1)))
+        val mP = Vector(multStrassenPar(subM1(0),mS1(0)),multStrassenPar(mS1(0),subM2(3)),multStrassenPar(mS1(2),subM2(0)),multStrassenPar(subM1(3),mS1(3)),multStrassenPar(mS1(4),mS2(0)),multStrassenPar(mS2(1),mS2(2)),multStrassenPar(mS2(3),mS2(4)))
         val mult = Vector(parallel(sumMatriz(mP(4),restaMatriz(mP(3),sumMatriz(mP(1),mP(5)))),sumMatriz(mP(0),mP(1)),sumMatriz(mP(2),mP(3)),sumMatriz(mP(4),restaMatriz(mP(0),sumMatriz(mP(2),mP(6))))))
         
         Vector.tabulate(m1.length,m1.length)((i,j) => 
