@@ -11,8 +11,8 @@ val m21 = matrizAlAzar(math.pow(2,2).toInt,2)
 val m22 = matrizAlAzar(math.pow(2,2).toInt,2)
 val m71 = matrizAlAzar(math.pow(2,7).toInt,2)
 val m72 = matrizAlAzar(math.pow(2,7).toInt,2)
-val m151 = matrizAlAzar(math.pow(2,15).toInt,2)
-val m152 = matrizAlAzar(math.pow(2,15).toInt,2)
+val m101 = matrizAlAzar(math.pow(2,10).toInt,2)
+val m102 = matrizAlAzar(math.pow(2,10).toInt,2)
 
 //Matrices de tamaño 2^0
 multMatriz(m01,m02)
