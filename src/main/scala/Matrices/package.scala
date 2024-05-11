@@ -199,7 +199,6 @@ package object Matrices {
         val mitad = m1.length/2
         val (a11, a12, a21, a22) = (subMatriz(m1,0,0,mitad),subMatriz(m1,0,mitad,mitad),subMatriz(m1,mitad,0,mitad),subMatriz(m1,mitad,mitad,mitad))
         val (b11, b12, b21, b22) = (subMatriz(m2,0,0,mitad),subMatriz(m2,0,mitad,mitad),subMatriz(m2,mitad,0,mitad),subMatriz(m2,mitad,mitad,mitad))
-        
         val p1 = multStrassen(a11, restaMatriz(b12, b22))
         val p2 = multStrassen(sumMatriz(a11, a12), b22)
         val p3 = multStrassen(sumMatriz(a21, a22), b11)
@@ -207,12 +206,6 @@ package object Matrices {
         val p5 = multStrassen(sumMatriz(a11, a22), sumMatriz(b11, b22))
         val p6 = multStrassen(restaMatriz(a12, a22), sumMatriz(b21, b22))
         val p7 = multStrassen(restaMatriz(a11, a21), sumMatriz(b11, b12))
-
-
-        /*val (s1, s2, s3, s4, s5) = (restaMatriz(b12, b22),sumMatriz(a11,a12),sumMatriz(a21,a22),restaMatriz(b21,b11),sumMatriz(a11,a22))
-        val (s6, s7, s8, s9, s10) = (sumMatriz(b11,b22),restaMatriz(a12,a22),sumMatriz(b21,b22),restaMatriz(a11,a21),sumMatriz(b11,b12))
-        val (p1, p2, p3, p4, p5, p6, p7) = (multStrassen(a11, s1),multStrassen(s2, b22),multStrassen(s3, b11),multStrassen(a22, s4),multStrassen(s5, s6),multStrassen(s7, s8),multStrassen(s9, s10))
-        */
         val (c1, c2, c3, c4) = (sumMatriz(restaMatriz(sumMatriz(p5, p4),p2),p6),sumMatriz(p1, p2),sumMatriz(p3,p4),restaMatriz(restaMatriz(sumMatriz(p5, p1),p3),p7))
         
         Vector.tabulate(m1.length,m1.length)((i,j) => 
@@ -238,21 +231,13 @@ package object Matrices {
         val mitad = m1.length/2
         val (a11, a12, a21, a22) = parallel(subMatriz(m1,0,0,mitad),subMatriz(m1,0,mitad,mitad),subMatriz(m1,mitad,0,mitad),subMatriz(m1,mitad,mitad,mitad))
         val (b11, b12, b21, b22) = parallel(subMatriz(m2,0,0,mitad),subMatriz(m2,0,mitad,mitad),subMatriz(m2,mitad,0,mitad),subMatriz(m2,mitad,mitad,mitad))
-        
-        /*val (s1, s2, s3, s4, s5) = (task(restaMatriz(b12, b22)),task(sumMatriz(a11,a12)),task(sumMatriz(a21,a22)),task(restaMatriz(b21,b11)),task(sumMatriz(a11,a22)))
-        val (s6, s7, s8, s9, s10) = (task(sumMatriz(b11,b22)),task(restaMatriz(a12,a22)),task(sumMatriz(b21,b22)),task(restaMatriz(a11,a21)),task(sumMatriz(b11,b12)))
-        val (p1, p2, p3, p4, p5, p6, p7) = (task(multStrassenPar(a11,s1.join())),task(multStrassenPar(s2.join(),b22)),task(multStrassenPar(s3.join(),b11)),task(multStrassenPar(a22,s4.join())),task(multStrassenPar(s5.join(), s6.join())),task(multStrassenPar(s7.join(), s8.join())),task(multStrassenPar(s9.join(), s10.join())))
-        */
-
         val p1 = task(multStrassen(a11, restaMatriz(b12, b22)))
         val p2 = task(multStrassen(sumMatriz(a11, a12), b22))
         val p3 = task(multStrassen(sumMatriz(a21, a22), b11))
         val p4 = task(multStrassen(a22, restaMatriz(b21, b11)))
         val p5 = task(multStrassen(sumMatriz(a11, a22), sumMatriz(b11, b22)))
         val p6 = task(multStrassen(restaMatriz(a12, a22), sumMatriz(b21, b22)))
-        val p7 = task(multStrassen(restaMatriz(a11, a21), sumMatriz(b11, b12)))
-
-        
+        val p7 = task(multStrassen(restaMatriz(a11, a21), sumMatriz(b11, b12)))  
         val (c1, c2, c3, c4) = parallel(sumMatriz(restaMatriz(sumMatriz(p5.join(), p4.join()),p2.join()),p6.join()),sumMatriz(p1.join(), p2.join()),sumMatriz(p3.join(),p4.join()),restaMatriz(restaMatriz(sumMatriz(p5.join(), p1.join()),p3.join()),p7.join()))
         
         Vector.tabulate(m1.length,m1.length)((i,j) => 
@@ -261,115 +246,7 @@ package object Matrices {
           else if(i >= mitad && j < mitad) (c3(i-mitad)(j))
           else (c4(i-mitad)(j-mitad)))
       }
-    }  
-
-    //--------------------------
-    def multStrassenPrueba(m1: Matriz, m2: Matriz): Matriz = {
-    // Implementar el algoritmo de Strassen
-    // Suponiendo que las matrices m1 y m2 son cuadradas, entonces
-    // m1.length == m2.length
-
-    // Caso base: si la matriz es de tamaño 1x1
-    if (m1.length == 1 && m2.length == 1) Vector(Vector(m1(0)(0) * m2(0)(0)))
-    else {
-      // Caso recursivo
-      val n = m1.length / 2
-      val a11 = subMatriz(m1, 0, 0, n)
-      val a12 = subMatriz(m1, 0, n, n)
-      val a21 = subMatriz(m1, n, 0, n)
-      val a22 = subMatriz(m1, n, n, n)
-
-      val b11 = subMatriz(m2, 0, 0, n)
-      val b12 = subMatriz(m2, 0, n, n)
-      val b21 = subMatriz(m2, n, 0, n)
-      val b22 = subMatriz(m2, n, n, n)
-
-      val p1 = multStrassen(a11, restaMatriz(b12, b22))
-      val p2 = multStrassen(sumMatriz(a11, a12), b22)
-      val p3 = multStrassen(sumMatriz(a21, a22), b11)
-      val p4 = multStrassen(a22, restaMatriz(b21, b11))
-      val p5 = multStrassen(sumMatriz(a11, a22), sumMatriz(b11, b22))
-      val p6 = multStrassen(restaMatriz(a12, a22), sumMatriz(b21, b22))
-      val p7 = multStrassen(restaMatriz(a11, a21), sumMatriz(b11, b12))
-
-      val c11 = sumMatriz(restaMatriz(sumMatriz(p5, p4), p2), p6)
-      val c12 = sumMatriz(p1, p2)
-      val c21 = sumMatriz(p3, p4)
-      val c22 = restaMatriz(sumMatriz(p5, p1), sumMatriz(p3, p7))
-
-      Vector.tabulate(m1.length, m1.length)((i, j) =>
-        // Si i y j están en la primera mitad de la matriz
-        if (i < n && j < n) c11(i)(j)
-        // Si i está en la primera mitad y j en la segunda
-        else if (i < n && j >= n) c12(i)(j - n)
-        // Si i está en la segunda mitad y j en la primera
-        else if (i >= n && j < n) c21(i - n)(j)
-        // Si i y j están en la segunda mitad
-        else c22(i - n)(j - n)
-      )
     }
-  }
-
-  def multStrassenParPrueba(m1: Matriz, m2: Matriz): Matriz ={
-    // Igual a multStrassen pero se debe paralelizar con parallel el cálculo
-    // Suponiendo que las matrices m1 y m2 son cuadradas, entonces
-    // m1.length == m2.length
-
-    // Caso base (umbral): si la matriz es de tamaño 2^3x2^3
-    if (m1.length <= math.pow(2, 3)) multStrassen(m1, m2)
-    else {
-      // Caso recursivo
-      val n = m1.length / 2
-
-      val (a11, a12, a21, a22) = parallel(
-        subMatriz(m1, 0, 0, n),
-        subMatriz(m1, 0, n, n),
-        subMatriz(m1, n, 0, n),
-        subMatriz(m1, n, n, n)
-      )
-      val (b11, b12, b21, b22) = parallel(
-        subMatriz(m2, 0, 0, n),
-        subMatriz(m2, 0, n, n),
-        subMatriz(m2, n, 0, n),
-        subMatriz(m2, n, n, n)
-      )
-
-      // Usar task para paralelizar el cálculo de los productos
-      val p1 = task(multStrassen(a11, restaMatriz(b12, b22)))
-      val p2 = task(multStrassen(sumMatriz(a11, a12), b22))
-      val p3 = task(multStrassen(sumMatriz(a21, a22), b11))
-      val p4 = task(multStrassen(a22, restaMatriz(b21, b11)))
-      val p5 = task(multStrassen(sumMatriz(a11, a22), sumMatriz(b11, b22)))
-      val p6 = task(multStrassen(restaMatriz(a12, a22), sumMatriz(b21, b22)))
-      val p7 = task(multStrassen(restaMatriz(a11, a21), sumMatriz(b11, b12)))
-
-      val (c11, c12, c21, c22) = parallel(
-        sumMatriz(
-          restaMatriz(sumMatriz(p5.join(), p4.join()), p2.join()),
-          p6.join()
-        ),
-        sumMatriz(p1.join(), p2.join()),
-        sumMatriz(p3.join(), p4.join()),
-        restaMatriz(
-          sumMatriz(p5.join(), p1.join()),
-          sumMatriz(p3.join(), p7.join())
-        )
-      )
-
-      Vector.tabulate(m1.length, m1.length)((i, j) =>
-        // Si i y j están en la primera mitad de la matriz
-        if (i < n && j < n) c11(i)(j)
-        // Si i está en la primera mitad y j en la segunda
-        else if (i < n && j >= n) c12(i)(j - n)
-        // Si i está en la segunda mitad y j en la primera
-        else if (i >= n && j < n) c21(i - n)(j)
-        // Si i y j están en la segunda mitad
-        else c22(i - n)(j - n)
-      )
-    }
-  }
-
-    //--------------------------------------    
 }
 
 object Main {
