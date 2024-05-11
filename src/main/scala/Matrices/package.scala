@@ -81,14 +81,14 @@ package object Matrices {
       * @param m2 Matriz 2
       * @return Matriz resultante de m1 x m2
       */
-    def multMatrizPar(m1:Matriz, m2:Matriz): Matriz ={
-      if (m1.length<=1)(multMatriz(m1,m2))
-      else{
-        val m2Transpuesta = transpuesta(m2)
-        val mPar = Vector.tabulate(m1.size,m1.size)((i,j) => task(prodPunto(m1(i), m2Transpuesta(j))))
-        mPar.map(x => x.map(y => y.join()))
-      }      
-    }
+      def multMatrizPar(m1:Matriz, m2:Matriz): Matriz ={
+        if (m1.length<=1)(multMatriz(m1,m2))
+        else{
+          val m2Transpuesta = transpuesta(m2)
+          val mPar = Vector.tabulate(m1.size,m1.size)((i,j) => task(prodPunto(m1(i), m2Transpuesta(j))))
+          mPar.map(x => x.map(y => y.join()))
+        }      
+      }
 
     /**
       * Dada una matriz cuadrada m de tamaño NxN, 1<=i, j<=N, i+n<=N, j+n<=N,
@@ -247,21 +247,23 @@ object Main {
     import Matrices._
     import Benchmark._
 
-    //val m1 = matrizAlAzar(math.pow(2,2).toInt,2)
-    //val m2 = matrizAlAzar(math.pow(2,2).toInt,2)
+    val m101 = matrizAlAzar(math.pow(2,10).toInt,2)
+    val m102 = matrizAlAzar(math.pow(2,10).toInt,2)
+    //println("m71 = matrizAlAzar(math.pow(2,0).toInt,2) -> "+m151)
+    //println("m72 = matrizAlAzar(math.pow(2,0).toInt,2) -> "+m72)
     
-    val m1 = Vector(Vector(1, 1, 0, 1), Vector(0, 1, 0, 1), Vector(1, 1, 0, 0), Vector(0, 0, 1, 1))
-    val m2 = Vector(Vector(0, 1, 0, 0), Vector(0, 1, 0, 1), Vector(0, 0, 1, 0), Vector(1, 0, 0, 0))
+    println("multMatriz(m101,m102) ->"+multMatriz(m101,m102))
+    /*println("multMatrizPar(m71,m72) ->"+multMatrizPar(m71,m72))
+    println("multMatrizRec(m71,m72) ->"+multMatrizRec(m71,m72))
+    println("multMatrizRecPar(m71,m72) ->"+multMatrizRecPar(m71,m72))
+    println("multStrassen(m71,m72) ->"+multStrassen(m71,m72))
+    println("multStrassenPar(m71,m72) ->"+multStrassenPar(m71,m72))*/
 
-    //Secuenciales
-    println("multMatriz: "+multMatriz(m1,m2)+"\n")
-    println("multMatrizRec: "+multMatrizRec(m1,m2)+"\n")
-    println("multStrassen: "+multStrassen(m1,m2)+"\n")
-
-    //Paralelas
-    println("multMatrizPar: "+multMatrizPar(m1,m2)+"\n")
-    println("multMatrizRecPar: "+multMatrizRecPar(m1,m2)+"\n")
-    println("multStrassesPar: "+multStrassenPar(m1,m2)+"\n")
+    /*for{
+      i <- 1 to 10
+      m1 = matrizAlAzar(math.pow(2,i).toInt,2)
+      m2 = matrizAlAzar(math.pow(2,i).toInt,2)
+    } yield (println("Comparación Secuencial, i= "+i+" "+compararAlgoritmos(multMatriz,multMatrizPar)(m1,m2)))*/
   }
 }
 

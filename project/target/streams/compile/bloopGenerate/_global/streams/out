@@ -1,4 +1,4 @@
-[debug] [tallerconcurrencia-build] Classpath dependencies List()
-[debug] [tallerconcurrencia-build] Dependencies from configurations List()
-[debug] Bloop wrote the configuration of project 'tallerconcurrencia-build' to 'E:\Universidad\Ingeniería de Sistemas\3 - Tercer Semestre\Fund. Prog. Funcional y Concurrente\Talleres\TallerConcurrencia\project\.bloop\tallerconcurrencia-build.json'
-[success] Generated .bloop\tallerconcurrencia-build.json
+[0m[[0m[0mdebug[0m] [0m[0m[tallerconcurrencia-build] Classpath dependencies List()[0m
+[0m[[0m[0mdebug[0m] [0m[0m[tallerconcurrencia-build] Dependencies from configurations List()[0m
+[0m[[0m[0mdebug[0m] [0m[0mBloop wrote the configuration of project 'tallerconcurrencia-build' to 'E:\Universidad\Ingeniería de Sistemas\3 - Tercer Semestre\Fund. Prog. Funcional y Concurrente\Talleres\TallerConcurrencia\project\.bloop\tallerconcurrencia-build.json'[0m
+[0m[[0m[32msuccess[0m] [0m[0mGenerated .bloop\tallerconcurrencia-build.json[0m
