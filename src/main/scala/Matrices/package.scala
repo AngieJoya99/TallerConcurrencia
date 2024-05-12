@@ -259,7 +259,7 @@ object Main {
       m2 = matrizAlAzar(math.pow(2,i).toInt,2)
     } yield (println("Comparación Strassen, i= "+i+" "+compararAlgoritmos(multStrassen,multStrassenPar)(m1,m2)))
     
-    //for (n <- 0 to 10000001 by 1000000) yield(println("Comparación Vectores, n= "+n+" "+compararProdPunto(n)))
+    //for (i <- 1 to 10) yield(println("Comparación Vectores, i= "+i+" "+compararProdPunto(math.pow(10,i).toInt)))
     
 
     /*val m21 = matrizAlAzar(math.pow(2,10).toInt,2)
