@@ -2,6 +2,9 @@
 Emily Nuñez - 2240156*/
 
 import Matrices._
+import Matrices.vectorAlAzar
+import Matrices.prodPunto
+import Matrices.prodPuntoParD
 
 val m01 = matrizAlAzar(math.pow(2,0).toInt,2)
 val m02 = matrizAlAzar(math.pow(2,0).toInt,2)
@@ -53,3 +56,34 @@ multMatrizRec(m101,m102)
 multMatrizRecPar(m101,m102)
 multStrassen(m101,m102)
 multStrassenPar(m101,m102)
+
+val v01 = vectorAlAzar(math.pow(10,0).toInt,2)
+val v02 = vectorAlAzar(math.pow(10,0).toInt,2)
+val v11 = vectorAlAzar(math.pow(10,1).toInt,2)
+val v12 = vectorAlAzar(math.pow(10,1).toInt,2)
+val v21 = vectorAlAzar(math.pow(10,2).toInt,2)
+val v22 = vectorAlAzar(math.pow(10,2).toInt,2)
+val v31 = vectorAlAzar(math.pow(10,3).toInt,2)
+val v32 = vectorAlAzar(math.pow(10,3).toInt,2)
+val v41 = vectorAlAzar(math.pow(10,4).toInt,2)
+val v42 = vectorAlAzar(math.pow(10,4).toInt,2)
+val v71 = vectorAlAzar(math.pow(10,7).toInt,2)
+val v72 = vectorAlAzar(math.pow(10,7).toInt,2)
+
+//Vectores de tamaño 10^0
+prodPunto(v01,v02)
+
+//Vectores de tamaño 10^1
+prodPunto(v11,v12)
+
+//Vectores de tamaño 10^2
+prodPunto(v21,v22)
+
+//Vectores de tamaño 10^3
+prodPunto(v31,v32)
+
+//Vectores de tamaño 10^4
+prodPunto(v41,v42)
+
+//Vectores de tamaño 10^7
+prodPunto(v71,v72)
