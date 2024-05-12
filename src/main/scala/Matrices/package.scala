@@ -264,7 +264,7 @@ package object Matrices {
       * @return Multiplicación de m1 y m2
       */
     def multStrassenPar(m1:Matriz, m2:Matriz): Matriz ={
-      if (m1.length <= math.pow(2,0)) (multStrassen(m1,m2))
+      if (m1.length <= math.pow(2,4)) (multStrassen(m1,m2))
       else{
         val mitad = m1.length/2
         
